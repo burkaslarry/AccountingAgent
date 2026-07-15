@@ -12,7 +12,7 @@ CSV_HEADERS = [
     "Payment Date",
     "Category",
     "Amount",
-    "Currency (HKD)",
+    "Currency",
     "Reference File",
 ]
 

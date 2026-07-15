@@ -9,23 +9,32 @@
 <body>
   <main class="page">
     <header class="hero">
-      <p class="eyebrow">Hermes Agent · Receipt OCR</p>
+      <p class="eyebrow">InnovateXP Limited * AI Tools Series</p>
       <h1>AccountingAgent</h1>
       <p class="subtitle">
-        Upload receipt PDFs or images. Extract payment details and download a CSV for accounting.
+        Upload receipt PDFs or images. Extract payment details and download CSV or Excel for accounting.
       </p>
     </header>
 
     <section class="panel">
       <form id="upload-form" class="upload-form">
-        <label class="dropzone" for="files">
+        <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload receipts">
           <input id="files" name="files" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.tif" multiple />
-          <div>
+          <div class="dropzone-copy">
             <strong>Drop receipts here</strong>
-            <span>PDF, JPG, PNG, WEBP supported</span>
+            <span>Drag and drop multiple PDF, JPG, PNG, WEBP files — or click to browse</span>
           </div>
-        </label>
-        <button type="submit" id="submit-btn">Process receipts</button>
+        </div>
+
+        <div id="file-list-panel" class="file-list-panel hidden">
+          <div class="file-list-header">
+            <h3>Selected files</h3>
+            <button type="button" id="clear-files-btn" class="text-button">Clear all</button>
+          </div>
+          <ul id="file-list" class="file-list"></ul>
+        </div>
+
+        <button type="submit" id="submit-btn" disabled>Process receipts</button>
       </form>
       <p id="status" class="status"></p>
     </section>
@@ -33,7 +42,10 @@
     <section class="panel hidden" id="results-panel">
       <div class="results-header">
         <h2>Extracted rows</h2>
-        <a id="download-link" class="download-link" href="#">Download CSV</a>
+        <div class="download-actions">
+          <a id="download-link" class="download-link" href="#">Download CSV</a>
+          <a id="excel-download-link" class="download-link" href="#">Download Excel</a>
+        </div>
       </div>
       <div class="table-wrap">
         <table>
@@ -42,7 +54,7 @@
               <th>Payment Date</th>
               <th>Category</th>
               <th>Amount</th>
-              <th>Currency (HKD)</th>
+              <th>Currency</th>
               <th>Reference File</th>
             </tr>
           </thead>
@@ -52,6 +64,20 @@
       <div id="errors" class="errors"></div>
     </section>
   </main>
+
+  <div id="overlay" class="overlay hidden" aria-hidden="true">
+    <div id="loading-dialog" class="dialog loading-dialog hidden" role="alertdialog" aria-modal="true" aria-labelledby="loading-title">
+      <div class="spinner" aria-hidden="true"></div>
+      <h2 id="loading-title">Processing</h2>
+      <p id="loading-message">Processing receipts...</p>
+    </div>
+
+    <div id="error-dialog" class="dialog error-dialog hidden" role="alertdialog" aria-modal="true" aria-labelledby="error-title">
+      <h2 id="error-title">Something went wrong</h2>
+      <p id="error-message"></p>
+      <button type="button" id="dismiss-error-btn" class="dialog-button">OK</button>
+    </div>
+  </div>
 
   <script src="/static/app.js"></script>
 </body>
