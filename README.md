@@ -1,33 +1,62 @@
-# TextScanTesseract
-Applying Tesseract IOS 4.0 with cocoa pods to scan 
+# AccountingAgent
 
+Receipt upload web app powered by OCR and Hermes Agent.
 
+Upload PDF or image receipts, extract accounting fields, and download a CSV with:
 
-## About
+`Payment Date | Category | Amount | Currency (HKD) | Reference File`
 
-This demo projects contains Tesseract IOS cocoa pods available
-https://cocoapods.org/pods/TesseractOCRiOS
+## Quick start
 
-And Swift Language Compile is set to 3.2 instead of 4.0  at build settings 
+```bash
+cd web
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+bash ../scripts/hermes/install-skill.sh
+uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload
+```
 
-User can go to This readMe for configuration settings 
-https://github.com/tesseract-ocr/tesseract/blob/master/README.md
+Open: http://127.0.0.1:8080
 
-I extend this project to do the following : 
+Or run:
 
-1. Capture Text into singleton array
-2. Photo Capture while scanning
-3. Let user choose the captured text by programmatically generated pickerview
+```bash
+bash scripts/run-web.sh
+```
 
+## Hermes Agent
 
-## Known Issues
+Install the receipt skill:
 
-1. Since iOS 11 is still on update and bug fix, AVCapture Module may change frequently 
-2. The deployment target is set to 11.0. In case to lower down , please turn. it down
-3. While capturing, the camera Flash lights turn on but the preview image turns blurred for a second and then clear at the captured imageview. 
+```bash
+bash scripts/hermes/install-skill.sh
+```
 
-## Target 
-1. Change it to swift 4.0 compatitble and test 
-2. Scanned List filtering for differnet types of textfield
+Configure an LLM provider for Hermes:
 
+```bash
+hermes setup
+hermes doctor
+```
 
+If Hermes is unavailable or no provider is configured, the app falls back to local OCR + heuristic parsing.
+
+## Supported files
+
+- Images: JPG, PNG, WEBP, GIF, BMP, TIFF
+- Documents: PDF
+
+## Legacy iOS demo
+
+The original Tesseract iOS demo remains in `TextScanDemo/`.
+
+## CSV columns
+
+| Column | Description |
+|--------|-------------|
+| Payment Date | Transaction date (`YYYY-MM-DD`) |
+| Category | Expense category |
+| Amount | Total amount |
+| Currency (HKD) | Currency code, default HKD |
+| Reference File | Uploaded receipt filename |

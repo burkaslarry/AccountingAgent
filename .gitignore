@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.local
+uploads/
+exports/
+*.csv
+.DS_Store
+.web.pid

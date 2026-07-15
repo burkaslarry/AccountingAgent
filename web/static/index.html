@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AccountingAgent</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Hermes Agent · Receipt OCR</p>
+      <h1>AccountingAgent</h1>
+      <p class="subtitle">
+        Upload receipt PDFs or images. Extract payment details and download a CSV for accounting.
+      </p>
+    </header>
+
+    <section class="panel">
+      <form id="upload-form" class="upload-form">
+        <label class="dropzone" for="files">
+          <input id="files" name="files" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.tif" multiple />
+          <div>
+            <strong>Drop receipts here</strong>
+            <span>PDF, JPG, PNG, WEBP supported</span>
+          </div>
+        </label>
+        <button type="submit" id="submit-btn">Process receipts</button>
+      </form>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section class="panel hidden" id="results-panel">
+      <div class="results-header">
+        <h2>Extracted rows</h2>
+        <a id="download-link" class="download-link" href="#">Download CSV</a>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Payment Date</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Currency (HKD)</th>
+              <th>Reference File</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+      <div id="errors" class="errors"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
